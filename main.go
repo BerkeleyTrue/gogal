@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"berkeleytrue/gogal/internal/infra"
 	"log"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
@@ -15,12 +14,11 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	port := os.Getenv("PORT")
-	fmt.Println("Hello world from port " + port + "!")
-  app := fiber.New()
-  app.Get("/", func(c *fiber.Ctx) error {
-    return c.SendString("Hello, World 👋!")
-  })
+	app := fiber.New()
 
-  app.Listen(":" + port)
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, World 👋!")
+	})
+
+	infra.StartServerWithGracefulShutdown(app)
 }
