@@ -4,17 +4,17 @@ tmp_dir = "result"
 
 [build]
   args_bin = []
-  bin = "./result/bin/gogal"
+  bin = "./result/bin/cli"
   cmd = "nix build"
-  delay = 0
-  exclude_dir = ["assets", "bin", "vendor", "testdata", "result"]
+  delay = 5
+  exclude_dir = ["assets", "bin", "vendor", "testdata", "result*"]
   exclude_file = []
   exclude_regex = ["_test.go"]
   exclude_unchanged = false
   follow_symlink = false
   full_bin = ""
   include_dir = []
-  include_ext = ["go", "tpl", "tmpl", "html"]
+  include_ext = ["go", "tpl", "tmpl", "html", "pug"]
   include_file = []
   kill_delay = "0s"
   log = "build-errors.log"
