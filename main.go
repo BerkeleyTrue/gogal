@@ -1,9 +1,10 @@
 package main
 
 import (
-	"berkeleytrue/gogal/internal/infra"
 	"log"
 
+	"berkeleytrue/gogal/internal/app/handlers"
+	"berkeleytrue/gogal/internal/infra"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
@@ -16,9 +17,7 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
-	})
+	handlers.Public(app)
 
 	infra.StartServerWithGracefulShutdown(app)
 }
