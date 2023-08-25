@@ -18,9 +18,10 @@ pkgs.mkShell {
   packages = with pkgs; [
     goEnv
     gomod2nix
-    gopls
+    gopls # language server
     gotools
     go-tools
+    air # live reload
   ];
 
   # enter zsh on startup

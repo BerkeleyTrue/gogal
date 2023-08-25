@@ -1,3 +1,3 @@
-module example.com/gomod2nix-template
+module berkeleytrue/gogal
 
 go 1.17
