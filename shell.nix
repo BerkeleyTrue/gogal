@@ -13,7 +13,7 @@ let
   if [ -z "$checksum" ]; then
     exit 0
   fi
-  sed -i -e "s|vendorSha256 = \".*\"|vendorSha256 = \"$checksum\"|" ./flake.nix
+  sed -i -e "s|vendorSha256 = \".*\"|vendorSha256 = \"$checksum\"|" ./default.nix
 '';
 in
 pkgs.mkShell {
