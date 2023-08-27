@@ -2,15 +2,12 @@ package infra
 
 import (
 	"context"
-	"log"
-	"os"
-	"os/signal"
-
-	"berkeleytrue/gogal/config"
-	"berkeleytrue/gogal/internal/app"
 
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/fx"
+
+	"berkeleytrue/gogal/config"
+	"berkeleytrue/gogal/internal/app"
 )
 
 var Module = fx.Options(
@@ -18,32 +15,12 @@ var Module = fx.Options(
 	fx.Invoke(RegisterServer),
 )
 
-func StartServer(app *fiber.App, config *config.Config) {
+func StartServer(app *fiber.App, config *config.Config) error {
 	cfg := config.HTTP
-	// Create channel for idle connections.
-	idleConnsClosed := make(chan struct{})
-
-	go func() {
-		sigint := make(chan os.Signal, 1)
-		signal.Notify(sigint, os.Interrupt) // Catch OS signals.
-		<-sigint
-
-		// Received an interrupt signal, shutdown.
-		if err := StopServer(app); err != nil {
-			// Error from closing listeners, or context timeout:
-			log.Printf("Oops... Server is not shutting down! Reason: %v", err)
-		}
-
-		close(idleConnsClosed)
-	}()
-
 	port := cfg.Port
-	// Run server.
-	if err := app.Listen(":" + port); err != nil {
-		log.Printf("Oops... Server is not running! Reason: %v", err)
-	}
+	go app.Listen(":" + port)
 
-	<-idleConnsClosed
+  return nil
 }
 
 func StopServer(app *fiber.App) error {

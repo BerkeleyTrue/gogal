@@ -34,10 +34,13 @@ var rootCmd = &cobra.Command{
 		}
 
 		fmt.Println("Serving images from " + dirpath)
-		fx.New(
+
+    app := fx.New(
 			config.Module,
 			infra.Module,
-		).Run()
+		)
+
+		app.Run()
 	},
 }
 
