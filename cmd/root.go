@@ -37,6 +37,9 @@ var rootCmd = &cobra.Command{
 
     app := fx.New(
 			config.Module,
+			fx.Invoke(func(cfg *config.Config) {
+	      cfg.Directory = dirpath
+	    }),
 			infra.Module,
 		)
 

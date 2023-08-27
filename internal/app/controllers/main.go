@@ -1,23 +1,23 @@
 package controllers
 
 import (
-	"berkeleytrue/gogal/config"
-
 	"github.com/gofiber/fiber/v2"
+
+	"berkeleytrue/gogal/config"
 )
 
 type Service struct {
-  directory string
+	directory string
 }
 
 func NewService(cfg *config.Config) *Service {
-  return &Service{
-    directory: cfg.Directory,
-  }
+	return &Service{
+		directory: cfg.Directory,
+	}
 }
 
 func Register(app *fiber.App, s *Service) {
-  app.Get("/", s.Index)
+	app.Get("/", s.Index)
 }
 
 func (s *Service) Index(c *fiber.Ctx) error {
