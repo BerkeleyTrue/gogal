@@ -26,6 +26,7 @@ pkgs.mkShell {
     air # live reload
 
     update-vendor-sha
+    nodePackages.vscode-langservers-extracted # html/css language server
   ];
 
   # enter zsh on startup
