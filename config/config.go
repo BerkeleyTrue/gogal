@@ -5,49 +5,62 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"go.uber.org/fx"
 )
 
-var Port string = "3000"
-var Release string = "development"
-var User string = "Anon"
-var Time string = time.Now().Format(time.RFC3339);
-var Hash string = "N/A"
+var (
+	Port    = "3000"
+	Release = "development"
+	User    = "Anon"
+	Time    = time.Now().Format(time.RFC3339)
+	Hash    = "N/A"
+	Module  = fx.Options(fx.Provide(NewConfig))
+)
 
 type (
 	HTTP struct {
-		Port    string
+		Port string
 	}
 
 	Config struct {
-		HTTP    `yaml:"http"`
-		Hash    string
-		Time    string
-		User    string
-		Release string
+		HTTP      `yaml:"http"`
+		Hash      string
+		Time      string
+		User      string
+		Release   string
+		Directory string
 	}
 )
 
-func NewConfig() (*Config, error) {
-	err := godotenv.Load()
-	if err != nil {
-	  return nil, err
+func NewConfig() *Config {
+
+	cfg := &Config{
+		HTTP: HTTP{
+			Port: Port,
+		},
+		Hash:      Hash,
+		Time:      Time,
+		User:      User,
+		Release:   Release,
+		Directory: "",
 	}
 
-	cfg := &Config{}
+	return cfg
+}
 
-  port, is_found := os.LookupEnv("PORT")
+func (cfg *Config) InitConfig(dir string) error {
+	err := godotenv.Load()
+	if err != nil {
+		return err
+	}
 
-	if is_found {
-    cfg.HTTP.Port = port
-  } else {
-    cfg.HTTP.Port = Port
-  }
+	port, is_port_found := os.LookupEnv("PORT")
 
-	cfg.Hash = Hash
-	cfg.Time = Time
-	cfg.User = User
+	if is_port_found {
+		cfg.HTTP.Port = port
+	}
 
-	cfg.Release = Release
+	cfg.Directory = dir
 
-	return cfg, nil
+	return nil
 }

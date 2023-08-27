@@ -1,7 +1,28 @@
 package controllers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"berkeleytrue/gogal/config"
 
-func Index(c *fiber.Ctx) error {
-	return c.Render("index", fiber.Map{})
+	"github.com/gofiber/fiber/v2"
+)
+
+type Service struct {
+  directory string
+}
+
+func NewService(cfg *config.Config) *Service {
+  return &Service{
+    directory: cfg.Directory,
+  }
+}
+
+func Register(app *fiber.App, s *Service) {
+  app.Get("/", s.Index)
+}
+
+func (s *Service) Index(c *fiber.Ctx) error {
+	return c.Render("index", fiber.Map{
+		"Title":     "Hello, World!",
+		"Directory": s.directory,
+	}, "layouts/main")
 }

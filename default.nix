@@ -1,21 +1,21 @@
-{ pkgs ? (
-    let
-      inherit (builtins) fetchTree fromJSON readFile;
-      inherit ((fromJSON (readFile ./flake.lock)).nodes) nixpkgs gomod2nix;
-    in
-    import (fetchTree nixpkgs.locked) {
-      overlays = [
-        (import "${fetchTree gomod2nix.locked}/overlay.nix")
-      ];
-    }
-  )
-}:
-
-pkgs.buildGoApplication {
+{ pkgs, nix-filter }: pkgs.buildGoModule {
   pname = "gogal";
   version = "0.1";
   pwd = ./.;
-  src = ./.;
-  modules = ./gomod2nix.toml;
+  src =
+    let
+      show-trace = true;
+      source-files = nix-filter.lib.filter
+        {
+          root = ./.;
+        };
+    in
+    (if (show-trace) then
+      pkgs.lib.sources.trace source-files
+    else
+      source-files
+    );
+
   subPackages = [ "cmd/cli" ];
+  vendorSha256 = "sha256-85oFD9RvutaEPOLtaGGF6vFxwDKQ/A3wN2JBLgESHNg=";
 }

@@ -1,20 +1,15 @@
 package main
 
 import (
-	"log"
+	"fmt"
+	"os"
 
-	"berkeleytrue/gogal/config"
-	"berkeleytrue/gogal/internal/app"
+	"berkeleytrue/gogal/cmd"
 )
 
-// TODO: add cli commands
-
 func main() {
-	cfg, err := config.NewConfig()
-
-	if err != nil {
-		log.Fatal(err)
+	if err := cmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
-
-	app.Run(cfg)
 }

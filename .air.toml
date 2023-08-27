@@ -4,8 +4,8 @@ tmp_dir = "result"
 
 [build]
   args_bin = []
-  bin = "./result/bin/cli"
-  cmd = "nix build"
+  bin = "./result/bin/cli ~/pics"
+  cmd = "nix build --impure"
   delay = 5
   exclude_dir = ["assets", "bin", "vendor", "testdata", "result*"]
   exclude_file = []
