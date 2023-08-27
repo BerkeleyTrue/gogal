@@ -16,7 +16,11 @@ var Module = fx.Options(
 )
 
 func NewApp(cfg *config.Config) *fiber.App {
+  is_dev := cfg.Release == "development"
+
   engine := html.New("./web/views", ".html")
+  engine.Reload(is_dev)
+
 
 	app := fiber.New(fiber.Config{
     Views: engine,
