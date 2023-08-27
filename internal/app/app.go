@@ -26,5 +26,7 @@ func NewApp(cfg *config.Config) *fiber.App {
     Views: engine,
   })
 
+  app.Static("/", "./web/public")
+
 	return app;
 }
