@@ -17,6 +17,7 @@ var Module = fx.Options(
 
 func NewApp(cfg *config.Config) *fiber.App {
   is_dev := cfg.Release == "development"
+  directory := cfg.Directory
 
   engine := html.New("./web/views", ".html")
   engine.Reload(is_dev)
@@ -27,6 +28,7 @@ func NewApp(cfg *config.Config) *fiber.App {
   })
 
   app.Static("/", "./web/public")
+  app.Static("/images", directory)
 
 	return app;
 }
