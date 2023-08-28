@@ -1,11 +1,11 @@
 root = "."
 testdata_dir = "testdata"
-tmp_dir = "result"
+tmp_dir = "tmp"
 
 [build]
   args_bin = []
-  bin = "./result/bin/cli ~/pics"
-  cmd = "nix build --impure"
+  bin = "./tmp/bin/cli ../pics"
+  cmd = "go build -o ./tmp/bin/cli ./cmd/cli"
   delay = 5
   exclude_dir = ["assets", "bin", "vendor", "testdata", "result*"]
   exclude_file = []
