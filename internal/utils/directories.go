@@ -1,11 +1,12 @@
-package infra
+package utils
 
 import (
-	"berkeleytrue/gogal/internal/domain/models"
 	"fmt"
 	"io/fs"
 	"os"
 	"sort"
+
+	"berkeleytrue/gogal/internal/domain/models"
 )
 
 type DirStats []models.DirectoryStat
@@ -57,18 +58,20 @@ func getImage(path string) (string, bool) {
 	return getImage(firstDir)
 }
 
-func GetDirectores(imagePath string) ([]models.DirectoryStat, error) {
+func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 	// read imagePath and get all directories
 	f, err := os.Open(imagePath)
 
 	if err != nil {
-		return nil, err
+	  fmt.Println(err)
+		return nil
 	}
 
 	// if f is a file, return error
 	fileinfo, err := f.Stat()
 	if err != nil {
-		return nil, err
+	  fmt.Println(err)
+		return nil
 	}
 
 	fmt.Printf("%v is a directory\n", fileinfo.Name())
@@ -76,7 +79,8 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat, error) {
 	dirEntries, err := f.ReadDir(0)
 
 	if err != nil {
-		return nil, err
+	  fmt.Println(err)
+		return nil
 	}
 
 	type dirIntr struct {
@@ -97,6 +101,7 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat, error) {
 	}
 
 	var dirStats DirStats
+
 	for _, dirIntr := range directories {
 		path := dirIntr.path
 		dirEntry := dirIntr.dirEntry
@@ -127,5 +132,5 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat, error) {
 
 	sort.Slice(dirStats, dirStats.ByImage)
 
-	return dirStats, nil
+	return dirStats
 }
