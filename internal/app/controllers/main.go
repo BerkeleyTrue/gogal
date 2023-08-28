@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"berkeleytrue/gogal/config"
+	"berkeleytrue/gogal/internal/utils"
 )
 
 type Service struct {
@@ -21,8 +22,10 @@ func Register(app *fiber.App, s *Service) {
 }
 
 func (s *Service) Index(c *fiber.Ctx) error {
+	dirs := utils.GetDirectores(s.directory)
 	return c.Render("index", fiber.Map{
 		"Title":     "Hello, World!",
 		"Directory": s.directory,
+		"Dirs":      dirs,
 	}, "layouts/main")
 }

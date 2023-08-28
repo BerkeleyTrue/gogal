@@ -35,8 +35,6 @@ var rootCmd = &cobra.Command{
 
 		fmt.Println("Serving images from " + dirpath)
 
-    infra.GetDirectores(dirpath)
-
     app := fx.New(
 			config.Module,
 			fx.Invoke(func(cfg *config.Config) {

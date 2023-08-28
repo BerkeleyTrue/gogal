@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"os"
 	"sort"
+	"strings"
 
 	"berkeleytrue/gogal/internal/domain/models"
 )
@@ -68,13 +69,10 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 	}
 
 	// if f is a file, return error
-	fileinfo, err := f.Stat()
 	if err != nil {
 	  fmt.Println(err)
 		return nil
 	}
-
-	fmt.Printf("%v is a directory\n", fileinfo.Name())
 
 	dirEntries, err := f.ReadDir(0)
 
@@ -89,6 +87,7 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 	}
 
 	var directories []dirIntr
+
 	// map dirEntries to a struct of fileinfo and path
 	for _, fileinfo := range dirEntries {
 		directories = append(
@@ -113,7 +112,7 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 		if isDir {
 			foundImage, isFound := getImage(path)
 			if isFound {
-				image = foundImage
+				image =  strings.Replace(foundImage, imagePath, "/images", 1)
 			}
 		}
 

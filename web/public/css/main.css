@@ -82,3 +82,36 @@
   /*  Background color for the .warn colorway. */
   --main-font: "FiraCodeNerdFont", 'Source Sans 3', 'Source Sans Pro', -apple-system, system-ui, sans-serif;
 }
+
+/* create a card compoennt */
+.card {
+  background-position: center;
+  background-color: var(--box-bg);
+  border-radius: 0.5rem;
+  border: 1px solid var(--overlay0);
+  box-shadow: 0 0 0 1px var(--overlay0);
+  padding: 1rem;
+  margin: 1rem;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* text to show on the card */
+.card-text {
+  font-size: 1.5rem;
+  color: var(--fg);
+  position: absolute;
+  bottom: 0;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.bottom-10 {
+  bottom: 10px;
+}

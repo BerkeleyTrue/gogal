@@ -1,12 +1,12 @@
 package app
 
 import (
-	"berkeleytrue/gogal/config"
-	"berkeleytrue/gogal/internal/app/controllers"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 	"go.uber.org/fx"
+
+	"berkeleytrue/gogal/config"
+	"berkeleytrue/gogal/internal/app/controllers"
 )
 
 var Module = fx.Options(
@@ -16,19 +16,19 @@ var Module = fx.Options(
 )
 
 func NewApp(cfg *config.Config) *fiber.App {
-  is_dev := cfg.Release == "development"
+  isDev := cfg.Release == "development"
   directory := cfg.Directory
 
   engine := html.New("./web/views", ".html")
-  engine.Reload(is_dev)
+  engine.Reload(isDev)
 
 
 	app := fiber.New(fiber.Config{
     Views: engine,
   })
 
-  app.Static("/", "./web/public")
   app.Static("/images", directory)
+  app.Static("/", "./web/public")
 
 	return app;
 }
