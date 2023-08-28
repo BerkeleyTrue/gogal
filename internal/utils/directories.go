@@ -117,7 +117,7 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 		}
 
 		// the uri is the image path minus the imagePath prefixed with /images
-		uri := "/images" + path[len(imagePath):]
+		uri := "/pics" + path[len(imagePath):]
 
 		dirStats = append(dirStats,
 			models.DirectoryStat{
