@@ -2,7 +2,6 @@
 let
   # update the vendorSha256 of the default package
   update-vendor-sha = pkgs.writeShellScriptBin "update-vendor-sha" ''
-
     set -exuo pipefail
 
     failedbuild=$(nix build --impure 2>&1 || true)
@@ -16,8 +15,10 @@ let
     sed -i -e "s|vendorSha256 = \".*\"|vendorSha256 = \"$checksum\"|" ./default.nix
   '';
 
-  watch-css = pkgs.writeShellScriptBin "watch-css" ''
-    npx tailwindcss -i ./web/input.css -o ./web/public/css/output.css --watch
+  watch-compile = pkgs.writeShellScriptBin "watch-compile" ''
+    ${pkgs.concurrently}/bin/concurrently -n css,go \
+      "${pkgs.nodejs_18}/bin/npx tailwindcss -i ./web/input.css -o ./web/public/css/output.css --watch"\
+      "${pkgs.air}/bin/air"
   '';
 in
 pkgs.mkShell {
@@ -29,15 +30,16 @@ pkgs.mkShell {
     go-tools
     air # live reload
 
-    update-vendor-sha
-
     # editor
     nodePackages.vscode-langservers-extracted # html/css language server
     nodePackages.typescript-language-server # typescript language server
 
     # css stuff
     nodejs_18
-    watch-css
+
+    # scripts
+    update-vendor-sha
+    watch-compile
   ];
 
   # enter zsh on startup
