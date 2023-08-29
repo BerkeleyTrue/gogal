@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"os"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,12 +22,37 @@ func (s *Service) Pics(c *fiber.Ctx) error {
     breadcrumbs[i + 1] = struct{Name string; Uri string}{Name: bc, Uri: curUri}
   }
 
-	dir := s.directory + "/" + pics + "/"
-	dirs := utils.GetDirectores(dir, s.directory)
+	dir := s.directory + "/" + pics
+
+  file, err := os.Open(dir)
+
+	if err != nil {
+    return err
+  }
+
+  fileInfo, err := file.Stat()
+
+  if err != nil {
+    return err
+  }
+
+  isDir := fileInfo.IsDir()
+
+  if !isDir {
+    return c.Render("pics", fiber.Map{
+      "Title": pics,
+      "BreadCrumbs": breadcrumbs,
+      "IsDir": false,
+      "Uri": "/images/" + pics,
+    }, "layouts/main")
+  }
+
+	dirs := utils.GetDirectores(dir + "/", s.directory)
 
 	return c.Render("pics", fiber.Map{
 		"Title":       pics,
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,
+		"IsDir":       true,
 	}, "layouts/main")
 }

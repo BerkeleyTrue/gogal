@@ -2,6 +2,10 @@
 
   {{ template "components/breadcrumb" . }}
 
-  {{ template "components/gallery" . }}
+  {{ if .IsDir }}
+    {{ template "components/gallery" . }}
+  {{ else }}
+    <image src="{{ .Uri }}" class="w-full h-full" />
+  {{ end }}
 
 </div>
