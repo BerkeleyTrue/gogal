@@ -107,12 +107,13 @@ func GetDirectores(imagePath, baseDirectory string) ([]models.DirectoryStat) {
 
 		isDir := dirEntry.IsDir()
 
-		var image string = path
+    image := strings.Replace(path, baseDirectory, "/images", 1)
 
 		if isDir {
 			foundImage, isFound := getImage(path)
+
 			if isFound {
-				image =  strings.Replace(foundImage, imagePath, "/images", 1)
+				image =  strings.Replace(foundImage, baseDirectory, "/images", 1)
 			}
 		}
 
