@@ -9,7 +9,7 @@ import (
 )
 
 func (s *Service) Pics(c *fiber.Ctx) error {
-	pics := c.Params("dir")
+	pics := c.Params("*")
   picsSlice := strings.Split(pics, "/")
   curUri := "/pics"
   bcSize := len(picsSlice) + 1

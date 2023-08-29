@@ -19,7 +19,7 @@ func NewService(cfg *config.Config) *Service {
 
 func Register(app *fiber.App, s *Service) {
 	app.Get("/", s.Index)
-	app.Get("/pics/:dir", s.Pics)
+	app.Get("/pics/*", s.Pics)
 }
 
 func (s *Service) Index(c *fiber.Ctx) error {
