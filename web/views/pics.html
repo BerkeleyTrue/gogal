@@ -1,15 +1,6 @@
 <div class='flex flex-col w-screen h-screen px-6'>
-  <div class='container'>
-    <nav class="text-sm breadcrumbs px-6 w-full h-full">
-      <ul>
-        {{ range .BreadCrumbs }}
-        <li>
-          <a href="{{ .Uri }}" class="capitalize">{{ .Name }}</a>
-        </li>
-        {{ end }}
-      </ul>
-    </nav>
-  </div>
+
+  {{ template "components/breadcrumb" . }}
 
   {{ template "components/gallery" . }}
 
