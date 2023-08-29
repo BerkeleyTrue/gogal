@@ -3,18 +3,22 @@ let
   # update the vendorSha256 of the default package
   update-vendor-sha = pkgs.writeShellScriptBin "update-vendor-sha" ''
 
-  set -exuo pipefail
+    set -exuo pipefail
 
-  failedbuild=$(nix build --impure 2>&1 || true)
-  # echo "$failedbuild"
-  checksum=$(echo "$failedbuild" | awk '/got:.*sha256/ { print $2 }')
-  echo -n "\n\nchecksum: $checksum"
-  # do nothing if no checksum was found
-  if [ -z "$checksum" ]; then
-    exit 0
-  fi
-  sed -i -e "s|vendorSha256 = \".*\"|vendorSha256 = \"$checksum\"|" ./default.nix
-'';
+    failedbuild=$(nix build --impure 2>&1 || true)
+    # echo "$failedbuild"
+    checksum=$(echo "$failedbuild" | awk '/got:.*sha256/ { print $2 }')
+    echo -n "\n\nchecksum: $checksum"
+    # do nothing if no checksum was found
+    if [ -z "$checksum" ]; then
+      exit 0
+    fi
+    sed -i -e "s|vendorSha256 = \".*\"|vendorSha256 = \"$checksum\"|" ./default.nix
+  '';
+
+  watch-css = pkgs.writeShellScriptBin "watch-css" ''
+    npx tailwindcss -i ./web/input.css -o ./web/public/css/output.css --watch
+  '';
 in
 pkgs.mkShell {
   name = "gogal";
@@ -26,7 +30,14 @@ pkgs.mkShell {
     air # live reload
 
     update-vendor-sha
+
+    # editor
     nodePackages.vscode-langservers-extracted # html/css language server
+    nodePackages.typescript-language-server # typescript language server
+
+    # css stuff
+    nodejs_18
+    watch-css
   ];
 
   # enter zsh on startup

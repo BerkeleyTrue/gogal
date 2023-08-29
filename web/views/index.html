@@ -1,14 +1,14 @@
-<div class="f-col fullscreen">
-  <div class="f-row justify-content:space-around flex-wrap:wrap">
+<div class="w-screen h-screen flex flex-col pt-10">
+  <div class="flex flex-row justify-around">
 
     {{ range .Dirs }}
 
     <a href="{{ .Uri }}">
-      <div class='card margin' style='background-image: url({{ .Image }});'>
-        <div class='card-text width:100% bold'>
-          <div class='f-row justify-content:space-around align-items:center width:100%'>
+      <div class='card h-96 w-96 bg-base-100 shadow-xl relative' style='background-image: url({{ .Image }}); background-size: cover; background-position: center;'>
+        <div class='w-full h-12 bottom-0 absolute'>
+          <h2 class='justify-center align-center bg-base-100 card-title text-sky h-full w-full bg-opacity-50'>
             {{ .Name }}
-          </div>
+          </h2>
         </div>
       </div>
     </a>

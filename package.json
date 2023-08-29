@@ -1,0 +1,17 @@
+{
+  "name": "gogal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"hello\""
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@catppuccin/palette": "^0.2.0",
+    "@catppuccin/tailwindcss": "^0.1.6",
+    "daisyui": "^3.6.3",
+    "tailwindcss": "^3.3.3"
+  }
+}
