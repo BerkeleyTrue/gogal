@@ -1,0 +1,9 @@
+<div class="flex flex-row justify-around">
+
+  {{ range .Dirs }}
+
+  {{ template "components/card" . }}
+
+  {{ end }}
+
+</div>

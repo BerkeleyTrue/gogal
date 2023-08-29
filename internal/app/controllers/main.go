@@ -25,8 +25,7 @@ func Register(app *fiber.App, s *Service) {
 func (s *Service) Index(c *fiber.Ctx) error {
 	dirs := utils.GetDirectores(s.directory)
 	return c.Render("index", fiber.Map{
-		"Title":     "Hello, World!",
-		"Directory": s.directory,
+		"Title":     "Home",
 		"Dirs":      dirs,
 	}, "layouts/main")
 }
