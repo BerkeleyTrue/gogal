@@ -59,7 +59,7 @@ func getImage(path string) (string, bool) {
 	return getImage(firstDir)
 }
 
-func GetDirectores(imagePath string) ([]models.DirectoryStat) {
+func GetDirectores(imagePath, baseDirectory string) ([]models.DirectoryStat) {
 	// read imagePath and get all directories
 	f, err := os.Open(imagePath)
 
@@ -93,7 +93,7 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 		directories = append(
 			directories,
 			dirIntr{
-				path:     imagePath + "/" + fileinfo.Name(),
+				path:     imagePath + fileinfo.Name(),
 				dirEntry: fileinfo,
 			},
 		)
@@ -116,8 +116,9 @@ func GetDirectores(imagePath string) ([]models.DirectoryStat) {
 			}
 		}
 
-		// the uri is the image path minus the imagePath prefixed with /images
-		uri := "/pics" + path[len(imagePath):]
+    subpath := strings.Replace(path, baseDirectory, "", 1)
+
+		uri := "/pics" + subpath
 
 		dirStats = append(dirStats,
 			models.DirectoryStat{

@@ -22,7 +22,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
   }
 
 	dir := s.directory + "/" + pics + "/"
-	dirs := utils.GetDirectores(dir)
+	dirs := utils.GetDirectores(dir, s.directory)
 
 	return c.Render("pics", fiber.Map{
 		"Title":       pics,
