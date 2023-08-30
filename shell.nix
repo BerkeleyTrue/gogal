@@ -20,6 +20,10 @@ let
       "${pkgs.nodejs_18}/bin/npx tailwindcss -i ./web/input.css -o ./web/public/css/output.css --watch"\
       "${pkgs.air}/bin/air"
   '';
+
+  watch-tests = pkgs.writeShellScriptBin "watch-tests" ''
+    ${pkgs.ginkgo}/bin/ginkgo watch -r -p
+  '';
 in
 pkgs.mkShell {
   name = "gogal";
@@ -41,6 +45,7 @@ pkgs.mkShell {
     # scripts
     update-vendor-sha
     watch-compile
+    watch-tests
   ];
 
   # enter zsh on startup
