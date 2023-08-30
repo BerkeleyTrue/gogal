@@ -26,6 +26,7 @@ func getImage(path string) (string, bool) {
 	subdirectories, err := os.ReadDir(path)
 
 	if err != nil {
+		fmt.Println(err)
 		return "", false
 	}
 
@@ -69,20 +70,20 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 	f, err := os.Open(imagePath)
 
 	if err != nil {
-	  fmt.Println(err)
+		fmt.Println(err)
 		return nil
 	}
 
 	// if f is a file, return error
 	if err != nil {
-	  fmt.Println(err)
+		fmt.Println(err)
 		return nil
 	}
 
 	dirEntries, err := f.ReadDir(0)
 
 	if err != nil {
-	  fmt.Println(err)
+		fmt.Println(err)
 		return nil
 	}
 
@@ -102,7 +103,7 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 		directories = append(
 			directories,
 			dirIntr{
-				path:     imagePath + fileinfo.Name(),
+				path:     imagePath + "/" + fileinfo.Name(),
 				dirEntry: fileinfo,
 			},
 		)
@@ -116,17 +117,19 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 
 		isDir := dirEntry.IsDir()
 
-    image := strings.Replace(path, baseDirectory, "/images", 1)
+		image := strings.Replace(path, baseDirectory, "/images", 1)
 
 		if isDir {
 			foundImage, isFound := getImage(path)
 
 			if isFound {
-				image =  strings.Replace(foundImage, baseDirectory, "/images", 1)
-			}
+				image = strings.Replace(foundImage, baseDirectory, "/images", 1)
+			} else {
+        image = ""
+      }
 		}
 
-    subpath := strings.Replace(path, baseDirectory, "", 1)
+		subpath := strings.Replace(path, baseDirectory, "", 1)
 
 		uri := "/pics" + subpath
 

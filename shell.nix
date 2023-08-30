@@ -29,6 +29,7 @@ pkgs.mkShell {
     gotools
     go-tools
     air # live reload
+    ginkgo # testing framework
 
     # editor
     nodePackages.vscode-langservers-extracted # html/css language server
