@@ -74,6 +74,8 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 		return nil
 	}
 
+	defer f.Close()
+
 	// if f is a file, return error
 	if err != nil {
 		fmt.Println(err)
@@ -92,28 +94,15 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 		dirEntry fs.DirEntry
 	}
 
-	var directories []dirIntr
-
-	// map dirEntries to a struct of fileinfo and path
-	for _, fileinfo := range dirEntries {
-		// ignore hidden files
-		if strings.HasPrefix(fileinfo.Name(), ".") {
-			continue
-		}
-		directories = append(
-			directories,
-			dirIntr{
-				path:     imagePath + "/" + fileinfo.Name(),
-				dirEntry: fileinfo,
-			},
-		)
-	}
-
 	var dirStats DirStats
 
-	for _, dirIntr := range directories {
-		path := dirIntr.path
-		dirEntry := dirIntr.dirEntry
+	for _, dirEntry := range dirEntries {
+    name := dirEntry.Name()
+    if strings.HasPrefix(name, ".") {
+      continue
+    }
+
+		path := imagePath + "/" + name
 
 		isDir := dirEntry.IsDir()
 
