@@ -4,13 +4,21 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
 	"berkeleytrue/gogal/internal/domain/models"
 )
 
-type DirStats []models.DirectoryStat
+type (
+	DirStats []models.DirectoryStat
+	stat     struct {
+		name  string
+		isDir bool
+	}
+)
+
 
 func (d DirStats) ByImage(i, j int) bool {
 	return d[i].Image < d[j].Image
@@ -82,7 +90,37 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 		return nil
 	}
 
-	dirEntries, err := f.ReadDir(0)
+  fileState, err := f.Stat()
+
+  if err != nil {
+    fmt.Println(err)
+    return nil
+  }
+
+
+  var dirEntries []fs.DirEntry
+
+  if fileState.IsDir() {
+    dirEntries, err = f.ReadDir(0)
+  } else {
+    imagePath = filepath.Dir(imagePath)
+    parentFile, err := os.Open(imagePath)
+
+    if err != nil {
+      fmt.Println(err)
+      return nil
+    }
+
+    defer parentFile.Close()
+
+    dirEntries, err = parentFile.ReadDir(0)
+  }
+
+  if err != nil {
+    fmt.Println(err)
+    return nil
+  }
+
 
 	if err != nil {
 		fmt.Println(err)
@@ -97,10 +135,12 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 	var dirStats DirStats
 
 	for _, dirEntry := range dirEntries {
-    name := dirEntry.Name()
-    if strings.HasPrefix(name, ".") {
-      continue
-    }
+		name := dirEntry.Name()
+
+    // ignore hidden files
+		if strings.HasPrefix(name, ".") {
+			continue
+		}
 
 		path := imagePath + "/" + name
 
@@ -114,8 +154,8 @@ func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 			if isFound {
 				image = strings.Replace(foundImage, baseDirectory, "/images", 1)
 			} else {
-        image = ""
-      }
+				image = ""
+			}
 		}
 
 		subpath := strings.Replace(path, baseDirectory, "", 1)

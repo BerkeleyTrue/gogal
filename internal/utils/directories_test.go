@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"path/filepath"
 	"strings"
@@ -74,6 +75,7 @@ var _ = Describe("GetDirectories", func() {
 	Context("when the path is empty and last directory", func() {
 		It("should return an empty array", func() {
 			directories := GetDirectories(root+"/sub-empty/empty", root)
+			fmt.Printf("directories: %v\n", directories)
 
 			Expect(len(directories)).To(Equal(0))
 		})
@@ -102,16 +104,30 @@ var _ = Describe("GetDirectories", func() {
 	})
 
 	Context("when the directory has no sub directories but it has images", func() {
-	  It("should return stats", func() {
-      directories := GetDirectories(root+"/foo/bar", root)
+		It("should return stats", func() {
+			directories := GetDirectories(root+"/foo/bar", root)
 
-      Expect(len(directories)).To(Equal(2))
+			Expect(len(directories)).To(Equal(2))
 
-      Expect(directories[0].Uri).To(Equal("/pics/foo/bar/cat3.jpg"))
-      Expect(directories[0].Image).To(Equal("/images/foo/bar/cat3.jpg"))
+			Expect(directories[0].Uri).To(Equal("/pics/foo/bar/cat3.jpg"))
+			Expect(directories[0].Image).To(Equal("/images/foo/bar/cat3.jpg"))
 
-      Expect(directories[1].Uri).To(Equal("/pics/foo/bar/cat4.jpg"))
-      Expect(directories[1].Image).To(Equal("/images/foo/bar/cat4.jpg"))
-    })
-  })
+			Expect(directories[1].Uri).To(Equal("/pics/foo/bar/cat4.jpg"))
+			Expect(directories[1].Image).To(Equal("/images/foo/bar/cat4.jpg"))
+		})
+	})
+
+	Context("when path is an image", func() {
+		It("should get all the images in parent directory", func() {
+			directories := GetDirectories(root+"/foo/bar/cat3.jpg", root)
+
+			Expect(len(directories)).To(Equal(2))
+
+			Expect(directories[0].Uri).To(Equal("/pics/foo/bar/cat3.jpg"))
+			Expect(directories[0].Image).To(Equal("/images/foo/bar/cat3.jpg"))
+
+			Expect(directories[1].Uri).To(Equal("/pics/foo/bar/cat4.jpg"))
+			Expect(directories[1].Image).To(Equal("/images/foo/bar/cat4.jpg"))
+		})
+	})
 })
