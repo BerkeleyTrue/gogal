@@ -64,7 +64,7 @@ func getImage(path string) (string, bool) {
 	return getImage(firstDir)
 }
 
-func GetDirectores(imagePath, baseDirectory string) ([]models.DirectoryStat) {
+func GetDirectories(imagePath, baseDirectory string) []models.DirectoryStat {
 	// read imagePath and get all directories
 	f, err := os.Open(imagePath)
 

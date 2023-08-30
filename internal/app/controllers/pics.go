@@ -47,7 +47,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
     }, "layouts/main")
   }
 
-	dirs := utils.GetDirectores(dir + "/", s.directory)
+	dirs := utils.GetDirectories(dir + "/", s.directory)
 
 	return c.Render("pics", fiber.Map{
 		"Title":       pics,
