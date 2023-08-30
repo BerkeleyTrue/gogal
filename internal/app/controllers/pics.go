@@ -11,43 +11,66 @@ import (
 
 func (s *Service) Pics(c *fiber.Ctx) error {
 	pics := c.Params("*")
-  picsSlice := strings.Split(pics, "/")
-  curUri := "/pics"
-  bcSize := len(picsSlice) + 1
-  breadcrumbs := make([]struct{ Name string; Uri string}, bcSize)
-  breadcrumbs[0] = struct{ Name string; Uri string}{Name: "home", Uri: "/"}
+	picsSlice := strings.Split(pics, "/")
+	curUri := "/pics"
+	bcSize := len(picsSlice) + 1
+	breadcrumbs := make([]struct {
+		Name string
+		Uri  string
+	}, bcSize)
+	breadcrumbs[0] = struct {
+		Name string
+		Uri  string
+	}{Name: "home", Uri: "/"}
 
-  for i, bc := range strings.Split(pics, "/") {
-    curUri += "/" + bc
-    breadcrumbs[i + 1] = struct{Name string; Uri string}{Name: bc, Uri: curUri}
-  }
+	for i, bc := range strings.Split(pics, "/") {
+		curUri += "/" + bc
+		breadcrumbs[i+1] = struct {
+			Name string
+			Uri  string
+		}{Name: bc, Uri: curUri}
+	}
 
 	dir := s.directory + "/" + pics
 
-  file, err := os.Open(dir)
+	file, err := os.Open(dir)
 
 	if err != nil {
-    return err
-  }
+		return err
+	}
 
-  fileInfo, err := file.Stat()
+	fileInfo, err := file.Stat()
 
-  if err != nil {
-    return err
-  }
+	if err != nil {
+		return err
+	}
 
-  isDir := fileInfo.IsDir()
+	isDir := fileInfo.IsDir()
+	dirs := utils.GetDirectories(dir, s.directory)
 
-  if !isDir {
-    return c.Render("pics", fiber.Map{
-      "Title": pics,
-      "BreadCrumbs": breadcrumbs,
-      "IsDir": false,
-      "Uri": "/images/" + pics,
-    }, "layouts/main")
-  }
+	if !isDir {
+		numOfPics := len(dirs)
 
-	dirs := utils.GetDirectories(dir + "/", s.directory)
+		thisImageIndex := -1
+
+		for i, dir := range dirs {
+			if dir.Image == "/images/"+pics {
+				thisImageIndex = i
+				break
+			}
+		}
+
+		return c.Render("pics", fiber.Map{
+			"Title":       pics,
+			"BreadCrumbs": breadcrumbs,
+			"IsDir":       false,
+			"Uri":         "/images/" + pics,
+			"NumOfPics":   numOfPics,
+			"Index":       thisImageIndex,
+			"Next":        "",
+			"Prev":        "",
+		}, "layouts/main")
+	}
 
 	return c.Render("pics", fiber.Map{
 		"Title":       pics,
