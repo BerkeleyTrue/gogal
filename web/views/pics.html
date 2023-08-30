@@ -1,11 +1,11 @@
-<div class='flex flex-col w-screen h-screen px-6'>
+<div class='flex flex-col w-screen h-screen px-6 lg:container lg:items-center'>
 
   {{ template "components/breadcrumb" . }}
 
   {{ if .IsDir }}
     {{ template "components/gallery" . }}
   {{ else }}
-    <image src="{{ .Uri }}" class="w-full h-full" />
+    {{ template "components/image-view" . }}
   {{ end }}
 
 </div>

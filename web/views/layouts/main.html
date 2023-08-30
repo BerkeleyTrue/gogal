@@ -1,15 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="fullscreen" data-theme="catppuccin">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gogal| {{ .Title }}</title>
-  <link rel="stylesheet" href="/css/output.css">
-</head>
-<body class="w-screen h-screen">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gogal| {{ .Title }}</title>
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+
+  <body class="w-screen h-screen flex flex-col items-center">
     {{embed}}
-    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
-    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
-</body>
+    <script src="https://unpkg.com/htmx.org@1.9.5" async></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.11" async></script>
+    <script
+      src="https://unpkg.com/pinch-zoom-js/dist/pinch-zoom.min.js"
+      async
+    ></script>
+  </body>
 </html>
