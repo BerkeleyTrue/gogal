@@ -30,6 +30,11 @@ func getImage(path string) (string, bool) {
 	}
 
 	for _, dir := range subdirectories {
+		// ignore hidden files
+		if strings.HasPrefix(dir.Name(), ".") {
+			continue
+		}
+
 		if dir.IsDir() {
 
 			if firstDir == "" {
@@ -90,6 +95,10 @@ func GetDirectores(imagePath, baseDirectory string) ([]models.DirectoryStat) {
 
 	// map dirEntries to a struct of fileinfo and path
 	for _, fileinfo := range dirEntries {
+		// ignore hidden files
+		if strings.HasPrefix(fileinfo.Name(), ".") {
+			continue
+		}
 		directories = append(
 			directories,
 			dirIntr{
