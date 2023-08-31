@@ -20,8 +20,14 @@
     class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
   >
     <!-- prev -->
-    <button
-      _="on click call goToPrev()"
+    <a
+      id="prev"
+      hx-get="{{ .Prev }}"
+      hx-target="#image-container img"
+      hx-swap="outerHTML"
+      hx-select="#image-container img"
+      hx-swap-oob="true"
+      hx-push-url="true"
       class="btn glass mr-0 bg-opacity-40 sm:mr-16"
     >
       <svg
@@ -38,7 +44,7 @@
           d="M15.75 19.5L8.25 12l7.5-7.5"
         />
       </svg>
-    </button>
+    </a>
     <!-- zoom -->
     <button
       _="on click call zoomImage()"
@@ -101,7 +107,13 @@
     </button>
     <!-- next -->
     <button
-      _="on click call goToNext()"
+      id="next"
+      hx-get="{{ .Next }}"
+      hx-target="#image-container img"
+      hx-swap="outerHTML"
+      hx-select="#image-container img"
+      hx-swap-oob="true"
+      hx-push-url="true"
       class="btn glass mr-0 bg-opacity-40 sm:mr-16"
     >
       <svg
@@ -121,6 +133,8 @@
     </button>
 
     <input
+      id="range"
+      hx-swap-oob="true"
       type="range"
       min="0"
       max="{{ .NumOfPics }}"

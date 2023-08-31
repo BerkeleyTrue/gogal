@@ -60,6 +60,22 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 			}
 		}
 
+		nextUri := ""
+		// get next item uri
+		if len(dirs) > thisImageIndex+1 {
+			nextUri = dirs[thisImageIndex+1].Uri
+		} else {
+			nextUri = dirs[0].Uri
+		}
+
+		prevUri := ""
+		// get prev item uri
+		if thisImageIndex > 0 {
+			prevUri = dirs[thisImageIndex-1].Uri
+		} else {
+			prevUri = dirs[len(dirs)-1].Uri
+		}
+
 		return c.Render("pics", fiber.Map{
 			"Title":       pics,
 			"BreadCrumbs": breadcrumbs,
@@ -67,8 +83,8 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 			"Uri":         "/images/" + pics,
 			"NumOfPics":   numOfPics,
 			"Index":       thisImageIndex + 1,
-			"Next":        "",
-			"Prev":        "",
+			"Next":        prevUri,
+			"Prev":        nextUri,
 		}, "layouts/main")
 	}
 
