@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gogal| {{ .Title }}</title>
     <link rel="stylesheet" href="/css/output.css" />
+
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+    <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
   </head>
 
   <body class="w-screen h-screen flex flex-col items-center">
     {{embed}}
-    <script src="https://unpkg.com/htmx.org@1.9.5" async></script>
-    <script src="https://unpkg.com/hyperscript.org@0.9.11" async></script>
-    <script
-      src="https://unpkg.com/pinch-zoom-js/dist/pinch-zoom.min.js"
-      async
-    ></script>
   </body>
 </html>

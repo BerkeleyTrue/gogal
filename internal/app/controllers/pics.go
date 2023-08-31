@@ -66,7 +66,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 			"IsDir":       false,
 			"Uri":         "/images/" + pics,
 			"NumOfPics":   numOfPics,
-			"Index":       thisImageIndex,
+			"Index":       thisImageIndex + 1,
 			"Next":        "",
 			"Prev":        "",
 		}, "layouts/main")

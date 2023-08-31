@@ -1,20 +1,21 @@
 <div
   class="content relative flex w-full flex-col items-center justify-center lg:container"
 >
-  <div class="flex h-full w-full flex-1">
+
+  <div class="h-full w-full flex-1">
     <div class="hidden">
       <img src="" alt="" />
       <img src="" alt="" />
     </div>
 
-    <div class="">
-      <img src="{{ .Uri }}" alt="" />
+    <div id="image-container" class="flex h-full w-full flex-col items-center justify-center">
+      <img class="" src="{{ .Uri }}" alt="" />
     </div>
   </div>
 
   <!-- controls -->
   <div
-    class="absolute bottom-12 flex w-full flex-row items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
+    class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
   >
     <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
       <svg
@@ -96,5 +97,18 @@
         />
       </svg>
     </button>
+
+    <input
+      type="range"
+      min="0"
+      max="{{ .NumOfPics }}"
+      value="{{ .Index }}"
+      class="range"
+    />
   </div>
+
+  <script type="text/javascript">
+    var el = document.getElementById("image-container");
+    panzoom(el)
+  </script>
 </div>
