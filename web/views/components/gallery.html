@@ -1,5 +1,5 @@
-<div class="flex flex-row justify-around">
+<div id="gallery" class="flex flex-row justify-around" hx-swap-oop="true">
   {{ range .Dirs }}
-  {{ template "components/card" . }}
+  <div hx-boost="true">{{ template "components/card" . }}</div>
   {{ end }}
 </div>
