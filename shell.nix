@@ -24,6 +24,10 @@ let
   watch-tests = pkgs.writeShellScriptBin "watch-tests" ''
     ${pkgs.ginkgo}/bin/ginkgo watch -r -p
   '';
+
+  tailwindcss-language-server = pkgs.writeShellScriptBin "tailwindcss-language-server" ''
+    ${pkgs.nodejs_18}/bin/npx @tailwindcss/language-server --stdio
+  '';
 in
 pkgs.mkShell {
   name = "gogal";
@@ -46,6 +50,7 @@ pkgs.mkShell {
     update-vendor-sha
     watch-compile
     watch-tests
+    tailwindcss-language-server
   ];
 
   # enter zsh on startup
