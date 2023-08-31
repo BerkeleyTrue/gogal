@@ -1,14 +1,16 @@
 <div
   class="content relative flex w-full flex-col items-center justify-center lg:container"
 >
-
   <div class="h-full w-full flex-1">
     <div class="hidden">
       <img src="" alt="" />
       <img src="" alt="" />
     </div>
 
-    <div id="image-container" class="flex h-full w-full flex-col items-center justify-center">
+    <div
+      id="image-container"
+      class="flex h-full w-full flex-col items-center justify-center"
+    >
       <img class="" src="{{ .Uri }}" alt="" />
     </div>
   </div>
@@ -17,7 +19,11 @@
   <div
     class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
   >
-    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+    <!-- prev -->
+    <button
+      _="on click call goToPrev()"
+      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -33,7 +39,11 @@
         />
       </svg>
     </button>
-    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+    <!-- zoom -->
+    <button
+      _="on click call zoomImage()"
+      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -49,7 +59,11 @@
         />
       </svg>
     </button>
-    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+    <!-- reset -->
+    <button
+      _="on click call resetImage()"
+      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -65,7 +79,11 @@
         />
       </svg>
     </button>
-    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+    <!-- timer -->
+    <button
+      _="on click call toggleTimer()"
+      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -81,7 +99,11 @@
         />
       </svg>
     </button>
-    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+    <!-- next -->
+    <button
+      _="on click call goToNext()"
+      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -108,7 +130,32 @@
   </div>
 
   <script type="text/javascript">
-    var el = document.getElementById("image-container");
-    panzoom(el)
+    let el = document.getElementById("image-container");
+    let instance = panzoom(el);
+    let rect = el.getBoundingClientRect();
+    let initialX = rect.x + rect.width / 2;
+    let initialY = rect.y + rect.height / 2;
+    window.goToNext = function () {
+      console.log("goToNext");
+    };
+
+    window.goToPrev = function () {
+      console.log("goToPrev");
+    };
+
+    window.zoomImage = function () {
+      let rect = el.getBoundingClientRect();
+      let cx = rect.x + rect.width / 2;
+      let cy = rect.y + rect.height / 2;
+      instance.smoothZoom(cx, cy, 2);
+    };
+
+    window.resetImage = function () {
+      instance.zoomAbs(initialX, initialY, 1);
+    };
+
+    window.toggleTimer = function () {
+      console.log("toggleTimer");
+    };
   </script>
 </div>
