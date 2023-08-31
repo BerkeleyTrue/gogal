@@ -1,4 +1,100 @@
-<div class='h-screen w-full lg:container flex flex-col items-center justify-center'>
+<div
+  class="content relative flex w-full flex-col items-center justify-center lg:container"
+>
+  <div class="flex h-full w-full flex-1">
+    <div class="hidden">
+      <img src="" alt="" />
+      <img src="" alt="" />
+    </div>
 
-  <img src="{{ .Uri }}" alt="" />
+    <div class="">
+      <img src="{{ .Uri }}" alt="" />
+    </div>
+  </div>
+
+  <!-- controls -->
+  <div
+    class="absolute bottom-12 flex w-full flex-row items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
+  >
+    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+        />
+      </svg>
+    </button>
+    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+        />
+      </svg>
+    </button>
+    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+        />
+      </svg>
+    </button>
+    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </button>
+    <button class="btn glass mr-0 bg-opacity-40 sm:mr-16">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+        />
+      </svg>
+    </button>
+  </div>
 </div>
