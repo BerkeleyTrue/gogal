@@ -9,8 +9,8 @@ import (
 	"berkeleytrue/gogal/internal/utils"
 )
 
-func (s *Service) Pics(c *fiber.Ctx) error {
-	pics := c.Params("*")
+func (c *Controller) Pics(ctx *fiber.Ctx) error {
+	pics := ctx.Params("*")
 	picsSlice := strings.Split(pics, "/")
 	curUri := "/pics"
 	bcSize := len(picsSlice) + 1
@@ -31,7 +31,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 		}{Name: bc, Uri: curUri}
 	}
 
-	dir := s.directory + "/" + pics
+	dir := c.directory + "/" + pics
 
 	file, err := os.Open(dir)
 
@@ -46,7 +46,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 	}
 
 	isDir := fileInfo.IsDir()
-	dirs := utils.GetDirectories(dir, s.directory)
+	dirs := utils.GetDirectories(dir, c.directory)
 
 	if !isDir {
 		numOfPics := len(dirs)
@@ -76,7 +76,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 			prevUri = dirs[len(dirs)-1].Uri
 		}
 
-		return c.Render("pics", fiber.Map{
+		return ctx.Render("pics", fiber.Map{
 			"Title":       pics,
 			"BreadCrumbs": breadcrumbs,
 			"IsDir":       false,
@@ -88,7 +88,7 @@ func (s *Service) Pics(c *fiber.Ctx) error {
 		}, "layouts/main")
 	}
 
-	return c.Render("pics", fiber.Map{
+	return ctx.Render("pics", fiber.Map{
 		"Title":       pics,
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,

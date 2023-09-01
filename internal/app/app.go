@@ -9,9 +9,9 @@ import (
 )
 
 var Module = fx.Options(
-	fx.Provide(controllers.NewService),
+	fx.Provide(controllers.NewController),
 	fx.Invoke(SetupStatic),
-	fx.Invoke(controllers.Register),
+	fx.Invoke(controllers.RegisterRoutes),
 )
 
 func SetupStatic(app *fiber.App, cfg *config.Config) {
