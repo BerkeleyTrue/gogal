@@ -10,11 +10,11 @@ import (
 
 var Module = fx.Options(
 	fx.Provide(controllers.NewService),
-	fx.Invoke(SetupRoutes),
+	fx.Invoke(SetupStatic),
 	fx.Invoke(controllers.Register),
 )
 
-func SetupRoutes(app *fiber.App, cfg *config.Config) {
+func SetupStatic(app *fiber.App, cfg *config.Config) {
 	directory := cfg.Directory
 
 	app.Static("/images", directory)
