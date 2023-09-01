@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
 	"go.uber.org/fx"
 
 	"berkeleytrue/gogal/config"
@@ -11,9 +12,24 @@ import (
 )
 
 var Module = fx.Options(
+  fx.Provide(NewServer),
+	fx.Invoke(AddMiddlewares),
 	app.Module,
 	fx.Invoke(RegisterServer),
 )
+
+func NewServer(cfg *config.Config) *fiber.App {
+  isDev := cfg.Release == "development"
+
+  engine := html.New("./web/views", ".html")
+  engine.Reload(isDev)
+
+	app := fiber.New(fiber.Config{
+    Views: engine,
+  })
+
+  return app
+}
 
 func StartServer(app *fiber.App, config *config.Config) error {
 	cfg := config.HTTP
