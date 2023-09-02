@@ -144,32 +144,35 @@
   </div>
 
   <script type="text/javascript">
-    let el = document.getElementById("image-container");
-    let instance = panzoom(el);
-    let rect = el.getBoundingClientRect();
-    let initialX = rect.x + rect.width / 2;
-    let initialY = rect.y + rect.height / 2;
-    window.goToNext = function () {
-      console.log("goToNext");
-    };
-
-    window.goToPrev = function () {
-      console.log("goToPrev");
-    };
-
-    window.zoomImage = function () {
+    htmx.onLoad(() => {
+      let el = document.getElementById("image-container");
+      let instance = panzoom(el);
       let rect = el.getBoundingClientRect();
-      let cx = rect.x + rect.width / 2;
-      let cy = rect.y + rect.height / 2;
-      instance.smoothZoom(cx, cy, 2);
-    };
+      let initialX = rect.x + rect.width / 2;
+      let initialY = rect.y + rect.height / 2;
 
-    window.resetImage = function () {
-      instance.zoomAbs(initialX, initialY, 1);
-    };
+      window.goToNext = function () {
+        console.log("goToNext");
+      };
 
-    window.toggleTimer = function () {
-      console.log("toggleTimer");
-    };
+      window.goToPrev = function () {
+        console.log("goToPrev");
+      };
+
+      window.zoomImage = function () {
+        let rect = el.getBoundingClientRect();
+        let cx = rect.x + rect.width / 2;
+        let cy = rect.y + rect.height / 2;
+        instance.smoothZoom(cx, cy, 2);
+      };
+
+      window.resetImage = function () {
+        instance.zoomAbs(initialX, initialY, 1);
+      };
+
+      window.toggleTimer = function () {
+        console.log("toggleTimer");
+      };
+    });
   </script>
 </div>
