@@ -16,7 +16,7 @@
           };
         in
         {
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.alejandra;
           packages.default = pkgs.callPackage ./. { inherit pkgs nix-filter; };
           devShells.default = import ./shell.nix { inherit pkgs; };
         })
