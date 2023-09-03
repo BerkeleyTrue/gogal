@@ -4,7 +4,7 @@
     justify-center
   {{ else }}
     justify-between
-  {{ end }} flex h-full w-full flex-1 flex-row flex-wrap items-center"
+  {{ end }} flex h-full w-full flex-1 flex-col items-center overflow-y-auto lg:flex-row  lg:flex-wrap"
 >
   {{ range .Dirs }}
     <div hx-boost="true">{{ template "components/card" . }}</div>
