@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"os"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -10,28 +9,10 @@ import (
 )
 
 func (c *Controller) Pics(ctx *fiber.Ctx) error {
-	pics := ctx.Params("*")
-	picsSlice := strings.Split(pics, "/")
-	curUri := "/pics"
-	bcSize := len(picsSlice) + 1
-	breadcrumbs := make([]struct {
-		Name string
-		Uri  string
-	}, bcSize)
-	breadcrumbs[0] = struct {
-		Name string
-		Uri  string
-	}{Name: "home", Uri: "/"}
+	uri := ctx.Params("*")
+	breadcrumbs := buildBreadcrumbs(uri)
 
-	for i, bc := range strings.Split(pics, "/") {
-		curUri += "/" + bc
-		breadcrumbs[i+1] = struct {
-			Name string
-			Uri  string
-		}{Name: bc, Uri: curUri}
-	}
-
-	dir := c.directory + "/" + pics
+	dir := c.directory + "/" + uri
 
 	file, err := os.Open(dir)
 
@@ -54,7 +35,7 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 		thisImageIndex := -1
 
 		for i, dir := range dirs {
-			if dir.Image == "/images/"+pics {
+			if dir.Image == "/images/"+uri {
 				thisImageIndex = i
 				break
 			}
@@ -77,10 +58,10 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 		}
 
 		return ctx.Render("pics", fiber.Map{
-			"Title":       pics,
+			"Title":       uri,
 			"BreadCrumbs": breadcrumbs,
 			"IsDir":       false,
-			"Uri":         "/images/" + pics,
+			"Uri":         "/images/" + uri,
 			"NumOfPics":   numOfPics,
 			"Index":       thisImageIndex + 1,
 			"Next":        prevUri,
@@ -89,7 +70,7 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Render("pics", fiber.Map{
-		"Title":       pics,
+		"Title":       uri,
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,
 		"IsDir":       true,
