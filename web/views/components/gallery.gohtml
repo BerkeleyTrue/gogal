@@ -1,4 +1,11 @@
-<div class="flex h-full w-full flex-1 flex-row items-center justify-between">
+{{ $numOfDirs := len .Dirs }}
+<div
+  class="{{ if eq $numOfDirs 1 }}
+    justify-center
+  {{ else }}
+    justify-between
+  {{ end }} flex h-full w-full flex-1 flex-row flex-wrap items-center"
+>
   {{ range .Dirs }}
     <div hx-boost="true">{{ template "components/card" . }}</div>
   {{ end }}
