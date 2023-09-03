@@ -9,34 +9,38 @@ import (
 	"berkeleytrue/gogal/internal/app/services"
 )
 
-type Controller struct {
-	directory      string
-	imageService   *services.ImageService
-	galleryService *services.GalleryService
-}
+type (
+	Controller struct {
+		directory      string
+		imageService   *services.ImageService
+		galleryService *services.GalleryService
+	}
 
-func buildBreadcrumbs(pics string) []struct {
-	Name string
-	Uri  string
-} {
-	picsSlice := strings.Split(pics, "/")
-	curUri := "/pics"
-	bcSize := len(picsSlice) + 1
-	breadcrumbs := make([]struct {
+	breadCrumb struct {
 		Name string
 		Uri  string
-	}, bcSize)
-	breadcrumbs[0] = struct {
-		Name string
-		Uri  string
-	}{Name: "home", Uri: "/"}
+	}
+)
 
-	for i, bc := range strings.Split(pics, "/") {
+func buildBreadcrumbs(uri string) []breadCrumb {
+	uriComp := strings.Split(uri, "/")
+	curUri := ""
+	bcSize := len(uriComp) + 1
+
+	breadcrumbs := make([]breadCrumb, 0, bcSize)
+
+	breadcrumbs = append(breadcrumbs, breadCrumb{Name: "home", Uri: "/"})
+
+	for _, bc := range uriComp {
+
+		// filter out empty strings
+		if bc == "" {
+			continue
+		}
+
 		curUri += "/" + bc
-		breadcrumbs[i+1] = struct {
-			Name string
-			Uri  string
-		}{Name: bc, Uri: curUri}
+
+		breadcrumbs = append(breadcrumbs, breadCrumb{Name: bc, Uri: curUri})
 	}
 
 	return breadcrumbs
@@ -44,8 +48,8 @@ func buildBreadcrumbs(pics string) []struct {
 
 func NewController(cfg *config.Config, imageService *services.ImageService, galleryService *services.GalleryService) *Controller {
 	return &Controller{
-		directory: cfg.Directory,
-		imageService: imageService,
+		directory:      cfg.Directory,
+		imageService:   imageService,
 		galleryService: galleryService,
 	}
 }
