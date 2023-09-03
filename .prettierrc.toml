@@ -1,4 +1,4 @@
-
 plugins = [
+  "prettier-plugin-go-template",
   "prettier-plugin-tailwindcss"
 ]

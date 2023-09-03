@@ -4,7 +4,7 @@ const colors = variants.frappe;
 
 /** @type {import('tailwindcss').Config} */
 const config = {
-  content: ["./web/views/**/*.html"],
+  content: ["./web/views/**/*.gohtml"],
   theme: {
     extend: {},
   },

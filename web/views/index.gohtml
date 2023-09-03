@@ -5,10 +5,10 @@
   <div
     class="content relative flex w-full flex-col items-center justify-center overflow-hidden lg:container"
   >
-  {{ if .IsDir }}
-  {{ template "components/gallery" . }}
-  {{ else }}
-  {{ template "components/image-view" . }}
-  {{ end }}
+    {{ if .IsDir }}
+      {{ template "components/gallery" . }}
+    {{ else }}
+      {{ template "components/image-view" . }}
+    {{ end }}
   </div>
 </div>

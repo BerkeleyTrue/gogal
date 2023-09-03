@@ -21,7 +21,7 @@ var Module = fx.Options(
 func NewServer(cfg *config.Config) *fiber.App {
   isDev := cfg.Release == "development"
 
-  engine := html.New("./web/views", ".html")
+  engine := html.New("./web/views", ".gohtml")
   engine.Reload(isDev)
 
 	app := fiber.New(fiber.Config{
