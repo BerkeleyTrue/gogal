@@ -17,7 +17,7 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 	if !isDir {
 		thisImageIndex, numOfPics, nextDir, prevDir := c.imageService.GetImages(dirs, uri)
 
-		return ctx.Render("pics", fiber.Map{
+		return ctx.Render("index", fiber.Map{
 			"Title":       uri,
 			"BreadCrumbs": breadcrumbs,
 			"IsDir":       false,
@@ -26,10 +26,12 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 			"Index":       thisImageIndex + 1,
 			"Next":        nextDir.Uri,
 			"Prev":        prevDir.Uri,
+			"NextImage":   nextDir.Image,
+			"PrevImage":   prevDir.Image,
 		}, "layouts/main")
 	}
 
-	return ctx.Render("pics", fiber.Map{
+	return ctx.Render("index", fiber.Map{
 		"Title":       uri,
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,

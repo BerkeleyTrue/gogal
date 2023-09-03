@@ -2,15 +2,16 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-
-	"berkeleytrue/gogal/internal/utils"
 )
 
 func (c *Controller) Index(ctx *fiber.Ctx) error {
-	dirs := utils.GetDirectories(c.directory, c.directory)
+	breadcrumbs := buildBreadcrumbs("")
+	dirs := c.galleryService.GetDirectories(c.directory)
 
 	return ctx.Render("index", fiber.Map{
-		"Title":     "Home",
-		"Dirs":      dirs,
+		"Title":       "Home",
+		"Dirs":        dirs,
+		"BreadCrumbs": breadcrumbs,
+		"IsDir":       true,
 	}, "layouts/main")
 }

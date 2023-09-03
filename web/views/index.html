@@ -1,3 +1,14 @@
-<div class="flex h-screen w-screen flex-col px-6 py-10">
+<div
+  class="flex h-screen w-screen flex-col items-center justify-center px-6 py-10"
+>
+  {{ template "components/breadcrumb" . }}
+  <div
+    class="content relative flex w-full flex-col items-center justify-center overflow-hidden lg:container"
+  >
+  {{ if .IsDir }}
   {{ template "components/gallery" . }}
+  {{ else }}
+  {{ template "components/image-view" . }}
+  {{ end }}
+  </div>
 </div>

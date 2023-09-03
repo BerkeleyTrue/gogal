@@ -1,172 +1,169 @@
-<div
-  class="content relative flex w-full flex-col items-center justify-center lg:container"
->
-  <div class="h-full w-full flex-1">
-    <div class="hidden">
-      <img src="" alt="" />
-      <img src="" alt="" />
-    </div>
-
-    <div
-      id="image-container"
-      class="flex h-full w-full flex-col items-center justify-center"
-    >
-      <img class="" src="{{ .Uri }}" alt="" />
-    </div>
+<div class="h-full w-full flex-1">
+  <div class="hidden">
+    <img src="{{ .NextImage }}" alt="" />
+    <img src="{{ .PrevImage }}" alt="" />
   </div>
 
-  <!-- controls -->
   <div
-    class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
+    id="image-container"
+    class="flex h-full w-full flex-col items-center justify-center"
   >
-    <!-- prev -->
-    <a
-      _="on click add .animate-ping to <svg/> in me"
-      id="prev"
-      hx-get="{{ .Prev }}"
-      hx-target="#image-container img"
-      hx-swap="outerHTML"
-      hx-select="#image-container img"
-      hx-select-oob="#next,#prev,#range"
-      hx-push-url="true"
-      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5L8.25 12l7.5-7.5"
-        />
-      </svg>
-    </a>
-    <!-- zoom -->
-    <button
-      _="on click call zoomImage()"
-      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-        />
-      </svg>
-    </button>
-    <!-- reset -->
-    <button
-      _="on click call resetImage()"
-      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-        />
-      </svg>
-    </button>
-    <!-- timer -->
-    <button
-      _="on click call toggleTimer()"
-      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    </button>
-    <!-- next -->
-    <button
-      _="on click add .animate-ping to <svg/> in me"
-      id="next"
-      hx-get="{{ .Next }}"
-      hx-target="#image-container img"
-      hx-swap="outerHTML"
-      hx-select="#image-container img"
-      hx-select-oob="#next,#prev,#range"
-      hx-push-url="true"
-      class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M8.25 4.5l7.5 7.5-7.5 7.5"
-        />
-      </svg>
-    </button>
-
-    <input
-      id="range"
-      hx-select-oob="#next,#prev,#range"
-      type="range"
-      min="0"
-      max="{{ .NumOfPics }}"
-      value="{{ .Index }}"
-      class="range"
-    />
+    <img class="" src="{{ .Uri }}" alt="" />
   </div>
-
-  <script type="text/javascript">
-    var el = document.getElementById("image-container");
-    if (el) {
-      var instance = panzoom(el);
-      var rect = el.getBoundingClientRect();
-      var initialX = rect.x + rect.width / 2;
-      var initialY = rect.y + rect.height / 2;
-
-      window.zoomImage = function () {
-        let rect = el.getBoundingClientRect();
-        let cx = rect.x + rect.width / 2;
-        let cy = rect.y + rect.height / 2;
-        instance.smoothZoom(cx, cy, 2);
-      };
-
-      window.resetImage = function () {
-        instance.zoomAbs(initialX, initialY, 1);
-      };
-
-      window.toggleTimer = function () {
-        console.log("toggleTimer");
-      };
-    }
-  </script>
 </div>
+
+<!-- controls -->
+<div
+  class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-center rounded-xl bg-surface0 bg-opacity-40 sm:justify-around"
+>
+  <!-- prev -->
+  <a
+    _="on click add .animate-ping to <svg/> in me"
+    id="prev"
+    hx-get="{{ .Prev }}"
+    hx-target="#image-container img"
+    hx-swap="outerHTML"
+    hx-select="#image-container img"
+    hx-select-oob="#next,#prev,#range"
+    hx-push-url="true"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M15.75 19.5L8.25 12l7.5-7.5"
+      />
+    </svg>
+  </a>
+  <!-- zoom -->
+  <button
+    _="on click call zoomImage()"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+      />
+    </svg>
+  </button>
+  <!-- reset -->
+  <button
+    _="on click call resetImage()"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+      />
+    </svg>
+  </button>
+  <!-- timer -->
+  <button
+    _="on click call toggleTimer()"
+    id="timer"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  </button>
+  <!-- next -->
+  <button
+    _="on click add .animate-ping to <svg/> in me"
+    id="next"
+    hx-get="{{ .Next }}"
+    hx-target="#image-container img"
+    hx-swap="outerHTML"
+    hx-select="#image-container img"
+    hx-select-oob="#next,#prev,#range"
+    hx-push-url="true"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+      />
+    </svg>
+  </button>
+
+  <input
+    id="range"
+    hx-select-oob="#next,#prev,#range"
+    type="range"
+    min="0"
+    max="{{ .NumOfPics }}"
+    value="{{ .Index }}"
+    class="range"
+  />
+</div>
+
+<script type="text/javascript">
+  var el = document.getElementById("image-container");
+  if (el) {
+    var instance = panzoom(el);
+    var rect = el.getBoundingClientRect();
+    var initialX = rect.x + rect.width / 2;
+    var initialY = rect.y + rect.height / 2;
+
+    window.zoomImage = function () {
+      let rect = el.getBoundingClientRect();
+      let cx = rect.x + rect.width / 2;
+      let cy = rect.y + rect.height / 2;
+      instance.smoothZoom(cx, cy, 2);
+    };
+
+    window.resetImage = function () {
+      instance.zoomAbs(initialX, initialY, 1);
+    };
+
+    window.toggleTimer = function () {
+      console.log("toggleTimer");
+    };
+  }
+</script>
