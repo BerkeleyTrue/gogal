@@ -2,6 +2,7 @@ package infra
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -9,26 +10,29 @@ import (
 
 	"berkeleytrue/gogal/config"
 	"berkeleytrue/gogal/internal/app"
+	"berkeleytrue/gogal/web/views"
 )
 
-var Module = fx.Options(
-  fx.Provide(NewServer),
-	fx.Invoke(AddMiddlewares),
-	app.Module,
-	fx.Invoke(RegisterServer),
+var (
+	Module = fx.Options(
+		fx.Provide(NewServer),
+		fx.Invoke(AddMiddlewares),
+		app.Module,
+		fx.Invoke(RegisterServer),
+	)
 )
 
 func NewServer(cfg *config.Config) *fiber.App {
-  isDev := cfg.Release == "development"
+	isDev := cfg.Release == "development"
 
-  engine := html.New("./web/views", ".gohtml")
-  engine.Reload(isDev)
+	engine := html.NewFileSystem(http.FS(views.ViewsFS), ".gohtml")
+	engine.Reload(isDev)
 
 	app := fiber.New(fiber.Config{
-    Views: engine,
-  })
+		Views: engine,
+	})
 
-  return app
+	return app
 }
 
 func StartServer(app *fiber.App, config *config.Config) error {
@@ -36,7 +40,7 @@ func StartServer(app *fiber.App, config *config.Config) error {
 	port := cfg.Port
 	go app.Listen(":" + port)
 
-  return nil
+	return nil
 }
 
 func StopServer(app *fiber.App) error {
