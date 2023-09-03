@@ -2,7 +2,7 @@
   <nav class="breadcrumbs flex h-full flex-col justify-center px-6 text-sm">
     <ul>
       {{ range .BreadCrumbs }}
-      <li>
+      <li hx-boost="true">
         <a href="{{ .Uri }}" class="capitalize">{{ .Name }}</a>
       </li>
       {{ end }}

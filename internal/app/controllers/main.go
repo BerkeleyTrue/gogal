@@ -24,7 +24,7 @@ type (
 
 func buildBreadcrumbs(uri string) []breadCrumb {
 	uriComp := strings.Split(uri, "/")
-	curUri := ""
+	curUri := "/pics"
 	bcSize := len(uriComp) + 1
 
 	breadcrumbs := make([]breadCrumb, 0, bcSize)
