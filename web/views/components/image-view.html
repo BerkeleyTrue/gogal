@@ -26,7 +26,7 @@
       hx-target="#image-container img"
       hx-swap="outerHTML"
       hx-select="#image-container img"
-      hx-swap-oob="true"
+      hx-select-oob="#next,#prev,#range"
       hx-push-url="true"
       class="btn glass mr-0 bg-opacity-40 sm:mr-16"
     >
@@ -112,7 +112,7 @@
       hx-target="#image-container img"
       hx-swap="outerHTML"
       hx-select="#image-container img"
-      hx-swap-oob="true"
+      hx-select-oob="#next,#prev,#range"
       hx-push-url="true"
       class="btn glass mr-0 bg-opacity-40 sm:mr-16"
     >
@@ -134,7 +134,7 @@
 
     <input
       id="range"
-      hx-swap-oob="true"
+      hx-select-oob="#next,#prev,#range"
       type="range"
       min="0"
       max="{{ .NumOfPics }}"
