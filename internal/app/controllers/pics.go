@@ -7,6 +7,7 @@ import (
 )
 
 func (c *Controller) Pics(ctx *fiber.Ctx) error {
+	isHx := ctx.Get("HX-Request") == "true"
 	uri := ctx.Params("*")
 	breadcrumbs := buildBreadcrumbs(uri)
 
@@ -15,7 +16,10 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 	dirs := utils.GetDirectories(path, c.directory)
 
 	if !isDir {
-		thisImageIndex, numOfPics, nextDir, prevDir := c.imageService.GetImages(dirs, uri)
+		thisImageIndex, numOfPics, nextDir, prevDir := c.imageService.GetImages(
+			dirs,
+			uri,
+		)
 
 		return ctx.Render("index", fiber.Map{
 			"Title":       uri,
@@ -28,6 +32,7 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 			"Prev":        prevDir.Uri,
 			"NextImage":   nextDir.Image,
 			"PrevImage":   prevDir.Image,
+			"IsHx":        isHx,
 		}, "layouts/main")
 	}
 
@@ -36,5 +41,6 @@ func (c *Controller) Pics(ctx *fiber.Ctx) error {
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,
 		"IsDir":       true,
+		"IsHx":        isHx,
 	}, "layouts/main")
 }

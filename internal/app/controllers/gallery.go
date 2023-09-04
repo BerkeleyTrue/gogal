@@ -5,6 +5,7 @@ import (
 )
 
 func (c *Controller) Index(ctx *fiber.Ctx) error {
+  isHx := ctx.Get("HX-Request") == "true"
 	breadcrumbs := buildBreadcrumbs("")
 	dirs := c.galleryService.GetDirectories(c.directory)
 
@@ -13,5 +14,6 @@ func (c *Controller) Index(ctx *fiber.Ctx) error {
 		"Dirs":        dirs,
 		"BreadCrumbs": breadcrumbs,
 		"IsDir":       true,
+		"IsHx":        isHx,
 	}, "layouts/main")
 }
