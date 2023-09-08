@@ -3,22 +3,24 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    nix-filter.url = "github:numtide/nix-filter";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    nix-filter = {
+      url = "github:numtide/nix-filter";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-filter }:
-    (flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-          };
-        in
-        {
-          formatter = pkgs.alejandra;
-          packages.default = pkgs.callPackage ./. { inherit pkgs nix-filter; };
-          devShells.default = import ./shell.nix { inherit pkgs; };
-        })
-    );
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux"];
+      perSystem = {pkgs, ...}: {
+        formatter = pkgs.alejandra;
+        packages.default = pkgs.callPackage ./. {inherit (inputs) nix-filter;};
+        devShells.default = pkgs.callPackage ./shell.nix {};
+      };
+    };
 }
