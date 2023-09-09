@@ -1,5 +1,5 @@
 {...}: {
-  perSystem = {pkgs, ...}: let
+  perSystem = {pkgs, config, ...}: let
     # update the vendorSha256 of the default package
     update-vendor-sha = pkgs.writeShellScriptBin "update-vendor-sha" ''
       set -exuo pipefail
@@ -29,8 +29,26 @@
       ${pkgs.nodejs_18}/bin/npx @tailwindcss/language-server --stdio
     '';
   in {
+    boulder = {
+      commands = [
+        {
+          exec = update-vendor-sha;
+          description = "update the vendorSha256 of the default package";
+        }
+        {
+          exec = watch-compile;
+          description = "watch tailwindcss and go files for changes and recompile";
+        }
+        {
+          exec = watch-tests;
+          description = "watch go files for changes and re-run tests";
+        }
+      ];
+    };
+
     devShells.default = pkgs.mkShell {
       name = "gogal";
+      inputsFrom = [config.boulder.devShell];
       packages = with pkgs; [
         go
         gopls # language server
@@ -42,15 +60,12 @@
         # editor
         nodePackages.vscode-langservers-extracted # html/css language server
         nodePackages.typescript-language-server # typescript language server
+        tailwindcss-language-server
 
         # css stuff
         nodejs_18
 
         # scripts
-        update-vendor-sha
-        watch-compile
-        watch-tests
-        tailwindcss-language-server
       ];
 
       # enter zsh on startup

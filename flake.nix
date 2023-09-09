@@ -17,6 +17,7 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
+        (import ./nix/boulder)
         (import ./default.nix)
         (import ./shell.nix)
       ];
