@@ -59,9 +59,7 @@ in {
             lib.concatStringsSep "echo;"
             (lib.mapAttrsToList (
                 category: commands:
-                  "echo -e '## "
-                  + category
-                  + "';echo;"
+                  "echo -e '   >==> ${category}\n'; "
                   + "echo '"
                   + lib.concatStringsSep "\n"
                   (
@@ -87,8 +85,8 @@ in {
       shellHook = ''
         function menu () {
           echo
-          echo -e "\033[1;31m### ️🔨 Welcome to the Nix devshell ###\n\033[0m"
-          ${devShell-help}/bin/devshell-help
+          echo -e "\033[1;34m>==> ️  '$name' shell\n\033[0m"
+          ${devShell-help}/bin/${devShell-help.name}
           echo
           echo "(Run '${devShell-help.name}' to display this menu again)"
           echo
