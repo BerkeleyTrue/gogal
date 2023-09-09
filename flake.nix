@@ -17,12 +17,12 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
+        (import ./default.nix)
         (import ./shell.nix)
       ];
       systems = ["x86_64-linux"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
-        packages.default = pkgs.callPackage ./. {inherit (inputs) nix-filter;};
       };
     };
 }
