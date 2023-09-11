@@ -133,7 +133,13 @@
   </button>
 
   <input
+    _="
+      on change wait 500ms call htmx.ajax('GET', '/api/images/'+my.value, #range)
+    "
     id="range"
+    hx-target="#image-container img"
+    hx-swap="outerHTML"
+    hx-select="#image-container img"
     hx-select-oob="#next,#prev,#range"
     type="range"
     min="1"
