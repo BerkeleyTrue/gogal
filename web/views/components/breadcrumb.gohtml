@@ -1,6 +1,6 @@
 <div class="container flex h-12 items-center justify-items-center">
   <nav class="breadcrumbs flex h-full flex-col justify-center px-6 text-sm">
-    <ul>
+    <ul id="breadcrumbs">
       {{ range .BreadCrumbs }}
         <li hx-boost="true">
           <a href="{{ .Uri }}" class="capitalize">{{ .Name }}</a>

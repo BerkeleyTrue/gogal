@@ -24,7 +24,7 @@
     hx-target="#image-container img"
     hx-swap="outerHTML"
     hx-select="#image-container img"
-    hx-select-oob="#next,#prev,#range"
+    hx-select-oob="#breadcrumbs,#next,#prev,#range"
     hx-push-url="true"
     class="btn glass mr-0 bg-opacity-40 sm:mr-16"
   >
@@ -114,7 +114,7 @@
     hx-target="#image-container img"
     hx-swap="outerHTML"
     hx-select="#image-container img"
-    hx-select-oob="#next,#prev,#range"
+    hx-select-oob="#breadcrumbs,#next,#prev,#range"
     hx-push-url="true"
   >
     <svg
@@ -142,12 +142,12 @@
     max="{{ .NumOfPics }}"
 
     hx-get="{{ .Dirname }}"
-    hx-trigger="change delay:500ms"
+    hx-trigger="change delay:200ms"
     hx-include="#range"
     hx-target="#image-container img"
     hx-swap="outerHTML"
     hx-select="#image-container img"
-    hx-select-oob="#next,#prev,#range"
+    hx-select-oob="#breadcrumbs,#next,#prev,#range"
 
     value="{{ .Index  }}"
   />
