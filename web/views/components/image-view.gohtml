@@ -108,13 +108,14 @@
   <button
     _="on click add .animate-ping to <svg/> in me"
     id="next"
+    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
+
     hx-get="{{ .Next }}"
     hx-target="#image-container img"
     hx-swap="outerHTML"
     hx-select="#image-container img"
     hx-select-oob="#next,#prev,#range"
     hx-push-url="true"
-    class="btn glass mr-0 bg-opacity-40 sm:mr-16"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -140,11 +141,15 @@
     min="1"
     max="{{ .NumOfPics }}"
 
+    hx-get="{{ .Dirname }}"
     hx-trigger="change delay:500ms"
-    hx-get="/gallery/images"
     hx-include="#range"
+    hx-target="#image-container img"
+    hx-swap="outerHTML"
+    hx-select="#image-container img"
+    hx-select-oob="#next,#prev,#range"
 
-    value="{{ .Index }}"
+    value="{{ .Index  }}"
   />
 </div>
 
