@@ -34,13 +34,13 @@ func (i *ImageService) IsPathADir(path string) bool {
 	return fileInfo.IsDir()
 }
 
-func (i *ImageService) GetImages(dirs []models.DirectoryStat, pics string) (int, int, models.DirectoryStat, models.DirectoryStat) {
+func (i *ImageService) GetImages(dirs []models.DirectoryStat, path string) (int, int, models.DirectoryStat, models.DirectoryStat) {
 	numOfPics := len(dirs)
 
 	thisImageIndex := -1
 
 	for i, dir := range dirs {
-		if dir.Image == "/images/"+pics {
+		if dir.Image == "/images/"+path {
 			thisImageIndex = i
 			break
 		}
