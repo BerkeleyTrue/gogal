@@ -19,6 +19,11 @@
 
       subPackages = ["cmd/cli"];
       vendorSha256 = "sha256-4A5j3N+H0TMYWFiVZUr74m3kK5kAcfZuXTDM/j+H024=";
+
+      postInstall = ''
+        mkdir -p $out/bin
+        mv $out/bin/cli $out/bin/gogal
+      '';
     };
   };
 }
