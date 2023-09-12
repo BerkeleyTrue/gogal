@@ -86,7 +86,7 @@
   </button>
   <!-- timer toggle -->
   <button
-    _="on click send start to #timer then call toggleTimer()"
+    _="on click send start to #timer"
     id="timer-toggle"
     class="btn glass mr-0 bg-opacity-40 sm:mr-16"
   >
@@ -135,14 +135,15 @@
 
   <!-- Timer input  -->
   <input
-    _="on start toggle .hidden then toggle .h-44 .h-32 on #controls"
+    _="on start toggle .hidden then toggle .h-44 .h-32 on #controls then call toggleTimer(false)
+       on change call toggleTimer(true)"
     id="timer"
     type="range"
     name="timer"
     min="1"
     max="15"
     value="10"
-    class="hidden range"
+    class="range hidden"
   />
 
   <input
@@ -182,8 +183,23 @@
       instance.zoomAbs(initialX, initialY, 1);
     };
 
-    window.toggleTimer = function () {
-      console.log("toggleTimer");
+    var timerId = null;
+    window.toggleTimer = function toggleTimer(update) {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+
+        if (!update) {
+          return;
+        }
+      }
+      const value = document.getElementById("timer").value;
+      const delay = 1000 * (!value || (value <= 0) ? 2 : value);
+
+      timerId = setInterval(() => {
+        let next = document.getElementById("next");
+        next.click();
+      }, delay);
     };
   }
 </script>
