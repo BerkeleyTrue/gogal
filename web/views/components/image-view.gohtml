@@ -14,6 +14,7 @@
 
 <!-- controls -->
 <div
+  id="controls"
   class="absolute bottom-12 flex h-32 w-full flex-row flex-wrap items-center justify-between rounded-xl bg-surface0 bg-opacity-40 px-2 sm:justify-around"
 >
   <!-- prev -->
@@ -83,10 +84,10 @@
       />
     </svg>
   </button>
-  <!-- timer -->
+  <!-- timer toggle -->
   <button
-    _="on click call toggleTimer()"
-    id="timer"
+    _="on click send start to #timer then call toggleTimer()"
+    id="timer-toggle"
     class="btn glass mr-0 bg-opacity-40 sm:mr-16"
   >
     <svg
@@ -109,7 +110,6 @@
     _="on click add .animate-ping to <svg/> in me"
     id="next"
     class="btn glass mr-0 bg-opacity-40 sm:mr-16"
-
     hx-get="{{ .Next }}"
     hx-target="#image-container img"
     hx-swap="outerHTML"
@@ -133,6 +133,18 @@
     </svg>
   </button>
 
+  <!-- Timer input  -->
+  <input
+    _="on start toggle .hidden then toggle .h-44 .h-32 on #controls"
+    id="timer"
+    type="range"
+    name="timer"
+    min="1"
+    max="15"
+    value="10"
+    class="hidden range"
+  />
+
   <input
     id="range"
     class="range"
@@ -140,7 +152,6 @@
     name="index"
     min="1"
     max="{{ .NumOfPics }}"
-
     hx-get="{{ .Dirname }}"
     hx-trigger="change delay:200ms"
     hx-include="#range"
@@ -148,8 +159,7 @@
     hx-swap="outerHTML"
     hx-select="#image-container img"
     hx-select-oob="#breadcrumbs,#next,#prev,#range"
-
-    value="{{ .Index  }}"
+    value="{{ .Index }}"
   />
 </div>
 
