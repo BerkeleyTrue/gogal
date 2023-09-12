@@ -1,15 +1,30 @@
 {inputs, ...}: {
   perSystem = {pkgs, ...}: {
-    packages.default = pkgs.buildGoModule {
+    packages.default = pkgs.buildGoModule rec {
       pname = "gogal";
       version = "0.1";
       pwd = ./.;
       src = let
+        # Set this to `true` in order to show all of the source files
+        # that will be included in the module build.
         show-trace = true;
+        nix-filter = inputs.nix-filter.lib;
+        # Match paths with the given extension
+
+        matchExts = map (ext: nix-filter.matchExt ext);
         source-files =
-          inputs.nix-filter.lib.filter
+          nix-filter.filter
           {
+            name = pname;
             root = ./.;
+            exclude =
+              [./assets ./nix]
+              ++ matchExts [
+                "toml"
+                "json"
+                "nix"
+                "lock"
+              ];
           };
       in (
         if show-trace
